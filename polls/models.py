@@ -230,4 +230,4 @@ class Cake(models.Model):
         verbose_name_plural = 'Тортики'
 
     def __str__(self):
-        return self.cake_text
+        return f"Тортик {self.id}"
