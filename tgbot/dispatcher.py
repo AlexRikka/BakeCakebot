@@ -15,6 +15,7 @@ def setup_dispatcher(dp):
 
     # main menu
     dp.add_handler(CommandHandler("show_prices", handlers.show_prices))
+    dp.add_handler(CommandHandler("show_prices", handlers.make_an_order))
     dp.add_handler(CommandHandler(
         "show_client_orders", handlers.show_client_orders))
     dp.add_handler(CommandHandler(

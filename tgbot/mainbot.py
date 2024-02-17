@@ -20,5 +20,5 @@ def run_polling(telegram_api_key):
 
 if __name__ == "__main__":
     load_dotenv()
-    telegram_api_key = os.environ['TG_TOKEN']
+    telegram_api_key = os.environ['TG_BOT_HTTP_KEY']
     run_polling(telegram_api_key)
