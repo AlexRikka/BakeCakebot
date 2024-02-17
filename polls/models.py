@@ -208,7 +208,7 @@ class Cake(models.Model):
         on_delete=models.CASCADE,
         related_name='client_cake'
         )
-    datetime = models.DateTimeField(
+    delivery_time = models.DateTimeField(
         blank=True,
         null=True,
         )
