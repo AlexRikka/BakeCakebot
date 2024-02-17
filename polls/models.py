@@ -30,11 +30,30 @@ class Client(models.Model):
         return self.username
 
 
+class Price(models.Model):
+    '''Цена'''
+    price = models.IntegerField(
+    )
+
+    class Meta:
+        verbose_name = 'Цена'
+        verbose_name_plural = 'Цены'
+        ordering = ('price',)
+
+    def __str__(self):
+        return self.price
+
+
 class Level(models.Model):
     """Уровни тортиков"""
     number_of_levels = models.CharField(
         max_length=50,
     )
+    # price = models.ForeignKey(
+    #     Price,
+    #     on_delete=models.CASCADE,
+    #     default=0
+    #     )
 
     class Meta:
         verbose_name = 'Уровни тортиков'
@@ -50,6 +69,11 @@ class Shape(models.Model):
     shape = models.CharField(
         max_length=50,
     )
+    # price = models.ForeignKey(
+    #     Price,
+    #     on_delete=models.CASCADE,
+    #     default=0
+    #     )
 
     class Meta:
         verbose_name = 'Форма тортиков'
@@ -65,6 +89,11 @@ class Topping(models.Model):
     topping = models.CharField(
         max_length=50,
     )
+    # price = models.ForeignKey(
+    #     Price,
+    #     on_delete=models.CASCADE,
+    #     default=0
+    #     )
 
     class Meta:
         verbose_name = 'Топпинг'
@@ -82,6 +111,11 @@ class Berries(models.Model):
         blank=True,
         null=True
     )
+    # price = models.ForeignKey(
+    #     Price,
+    #     on_delete=models.CASCADE,
+    #     default=0
+    #     )
 
     class Meta:
         verbose_name = 'Ягоды'
@@ -99,6 +133,11 @@ class Decor(models.Model):
         blank=True,
         null=True
     )
+    # price = models.ForeignKey(
+    #     Price,
+    #     on_delete=models.CASCADE,
+    #     default=0
+    #     )
 
     class Meta:
         verbose_name = 'Декор'
@@ -116,6 +155,11 @@ class Inscription(models.Model):
         blank=True,
         null=True
     )
+    # price = models.ForeignKey(
+    #     Price,
+    #     on_delete=models.CASCADE,
+    #     default=0
+    #     )
 
     class Meta:
         verbose_name = 'Надпись'
@@ -124,20 +168,6 @@ class Inscription(models.Model):
 
     def __str__(self):
         return self.inscription
-
-
-class Price(models.Model):
-    '''Цена'''
-    price = models.IntegerField(
-    )
-
-    class Meta:
-        verbose_name = 'Цена'
-        verbose_name_plural = 'Цены'
-        ordering = ('price',)
-
-    def __str__(self):
-        return self.price
 
 
 class Cake(models.Model):
@@ -172,16 +202,28 @@ class Cake(models.Model):
         blank=True,
         null=True,
         )
-    price = models.ForeignKey(
-        Price,
-        on_delete=models.CASCADE,
-        )
+    # price = models.ForeignKey(
+    #     Price,
+    #     on_delete=models.CASCADE,
+    #     )
 
     client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
         related_name='client_cake'
-    )
+        )
+    datetime = models.TimeField(
+        blank=True,
+        null=True,
+        )
+    adress = models.CharField(
+        blank=True,
+        max_length=255
+        )
+    comment = models.TextField(
+        blank=True,
+        null=True,
+        )
 
     class Meta:
         verbose_name = 'Тортик'
