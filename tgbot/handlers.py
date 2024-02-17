@@ -1,6 +1,8 @@
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-import messages*
+import messages as messages
+import keyboard as keyboard
+
 
 def callback_handler(update, context):
     """Запуск команд отловленных CallbackQueryHandler-ом."""
@@ -14,17 +16,9 @@ def callback_handler(update, context):
         'leave_complaint': leave_complaint,
     }
     COMMANDS[update.callback_query.data](update, context)
-
-
-def create_keyboard(queryset):
-    """Создает вертикальную клавиатуру с именами объектов из Queryset."""
-    keyboard = [
-        [InlineKeyboardButton(
-            item.name,
-            callback_data=item.name
-        )] for item in queryset
-    ]
-    return InlineKeyboardMarkup(keyboard)
+    
+    
+keyboard.create_keyboard(queryset) #не понимаю что это такое?
 
 
 def start_callback(update, context):
