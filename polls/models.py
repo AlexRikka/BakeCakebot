@@ -41,7 +41,7 @@ class Price(models.Model):
         ordering = ('price',)
 
     def __str__(self):
-        return self.price
+        return str(self.price)
 
 
 class Level(models.Model):
@@ -49,11 +49,11 @@ class Level(models.Model):
     number_of_levels = models.CharField(
         max_length=50,
     )
-    # price = models.ForeignKey(
-    #     Price,
-    #     on_delete=models.CASCADE,
-    #     default=0
-    #     )
+    price = models.ForeignKey(
+        Price,
+        on_delete=models.CASCADE,
+        default=0
+        )
 
     class Meta:
         verbose_name = 'Уровни тортиков'
@@ -69,11 +69,11 @@ class Shape(models.Model):
     shape = models.CharField(
         max_length=50,
     )
-    # price = models.ForeignKey(
-    #     Price,
-    #     on_delete=models.CASCADE,
-    #     default=0
-    #     )
+    price = models.ForeignKey(
+        Price,
+        on_delete=models.CASCADE,
+        default=0
+        )
 
     class Meta:
         verbose_name = 'Форма тортиков'
@@ -89,11 +89,11 @@ class Topping(models.Model):
     topping = models.CharField(
         max_length=50,
     )
-    # price = models.ForeignKey(
-    #     Price,
-    #     on_delete=models.CASCADE,
-    #     default=0
-    #     )
+    price = models.ForeignKey(
+        Price,
+        on_delete=models.CASCADE,
+        default=0
+        )
 
     class Meta:
         verbose_name = 'Топпинг'
@@ -111,11 +111,11 @@ class Berries(models.Model):
         blank=True,
         null=True
     )
-    # price = models.ForeignKey(
-    #     Price,
-    #     on_delete=models.CASCADE,
-    #     default=0
-    #     )
+    price = models.ForeignKey(
+        Price,
+        on_delete=models.CASCADE,
+        default=0
+        )
 
     class Meta:
         verbose_name = 'Ягоды'
@@ -133,11 +133,11 @@ class Decor(models.Model):
         blank=True,
         null=True
     )
-    # price = models.ForeignKey(
-    #     Price,
-    #     on_delete=models.CASCADE,
-    #     default=0
-    #     )
+    price = models.ForeignKey(
+        Price,
+        on_delete=models.CASCADE,
+        default=0
+        )
 
     class Meta:
         verbose_name = 'Декор'
@@ -155,11 +155,11 @@ class Inscription(models.Model):
         blank=True,
         null=True
     )
-    # price = models.ForeignKey(
-    #     Price,
-    #     on_delete=models.CASCADE,
-    #     default=0
-    #     )
+    price = models.ForeignKey(
+        Price,
+        on_delete=models.CASCADE,
+        default=0
+        )
 
     class Meta:
         verbose_name = 'Надпись'
