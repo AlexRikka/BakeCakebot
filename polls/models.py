@@ -16,10 +16,6 @@ class Client(models.Model):
     phone_number = models.CharField(
         max_length=12,
     )
-    duration = models.DurationField(
-        null=True,
-        blank=True,
-    )
 
     class Meta:
         verbose_name = 'Клиент'
@@ -212,11 +208,11 @@ class Cake(models.Model):
         on_delete=models.CASCADE,
         related_name='client_cake'
         )
-    datetime = models.TimeField(
+    datetime = models.DateTimeField(
         blank=True,
         null=True,
         )
-    adress = models.CharField(
+    address = models.CharField(
         blank=True,
         max_length=255
         )
