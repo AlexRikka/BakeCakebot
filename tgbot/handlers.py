@@ -1,4 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ConversationHandler
+
+NAME, PHONE_NUMBER, LOCATION, DELIVERY_TIME, COMMENT = range(5)
 
 
 def callback_handler(update, context):
@@ -10,6 +13,9 @@ def callback_handler(update, context):
         'show_client_orders': show_client_orders,
         'show_delivery_time': show_delivery_time,
         'leave_complaint': leave_complaint,
+        'ask_client_name': ask_client_name,
+        'ask_comment': ask_comment,
+        'registration_success': registration_success,
     }
     COMMANDS[update.callback_query.data](update, context)
 
@@ -117,3 +123,82 @@ def show_delivery_time(update, context):
 
 def leave_complaint(update, context):
     pass
+
+
+# registration
+def ask_client_name(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Для оформления заказа нам потребуются ваши данные:" +
+        "Имя и Номер телефона.\nПожалуйста, введите ваше имя: "
+    )
+    return NAME
+
+
+def ask_phone_number(update, context):
+    print(update.message.text)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Введите номер телефона:",
+    )
+    return PHONE_NUMBER
+
+
+def ask_location(update, context):
+    print(update.message.text)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Введите адрес доставки:",
+    )
+    return LOCATION
+
+
+def ask_delivery_time(update, context):
+    print(update.message.text)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Пожалуйста, укажите удобную вам дату и время доставки.\n\n" +
+        "❗️ За доставку в ближайшие 24 часа прибавляется 20% от стоимости заказа.\n\n" +
+        "📅 Укажите дату в формате дд.мм.гггг. Например: 23.05.2023.\n\n "+
+        "⏱ Укажите временной промежуток, в который подъедет курьер."+
+        "Например: с 10:00 до 12:00. Наш курьер свяжется с вами за 30 минут до приезда.\n\n" +
+        "Введите дату и время доставки:"
+    )
+    return DELIVERY_TIME
+
+
+def leave_comment(update, context):
+    print(update.message.text)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Хотите оставить комментарий к заказу?",
+        reply_markup=InlineKeyboardMarkup([[
+            InlineKeyboardButton(
+                "Да",
+                callback_data="ask_comment"
+            ),
+            InlineKeyboardButton(
+                "Нет",
+                callback_data='registration_success'
+            ),
+        ]])
+    )
+    return COMMENT
+
+
+def ask_comment(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Введите комментарий к заказу:",
+    )
+    return COMMENT
+
+
+def registration_success(update, context):
+    if update.message:
+        print(update.message.text)
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Заказ успешно оформлен!",
+    )
+    return ConversationHandler.END
