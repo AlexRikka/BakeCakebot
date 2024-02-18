@@ -208,11 +208,11 @@ class Cake(models.Model):
         on_delete=models.CASCADE,
         related_name='client_cake'
         )
-    datetime = models.TimeField(
+    delivery_time = models.DateTimeField(
         blank=True,
         null=True,
         )
-    adress = models.CharField(
+    address = models.CharField(
         blank=True,
         max_length=255
         )
@@ -226,4 +226,4 @@ class Cake(models.Model):
         verbose_name_plural = 'Тортики'
 
     def __str__(self):
-        return self.cake_text
+        return f"Тортик {self.id}"
