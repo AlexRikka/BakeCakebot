@@ -6,7 +6,7 @@ from telegram.ext import (
     Filters
 
 )
-import handlers
+from . import handlers
 
 NAME, PHONE_NUMBER, LOCATION, DELIVERY_TIME, COMMENT = range(5)
 
@@ -31,7 +31,10 @@ def setup_dispatcher(dp):
     # any callback
     dp.add_handler(CallbackQueryHandler(handlers.callback_handler))
 
-    # reistration
+    dp.add_handler(CommandHandler(
+        "show_levels", handlers.show_levels))
+
+    # registration
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler(
             "ask_client_name", handlers.ask_client_name)],

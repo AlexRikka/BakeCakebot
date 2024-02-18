@@ -176,7 +176,7 @@ class Cake(models.Model):
         Shape,
         on_delete=models.CASCADE
         )
-    topping = models.ForeignKey(
+    shape = models.ForeignKey(
         Topping,
         on_delete=models.CASCADE
         )
