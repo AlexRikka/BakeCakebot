@@ -1,5 +1,5 @@
 import os
-# from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand
 from dotenv import load_dotenv
 from telegram.ext import Updater
 from tgbot.dispatcher import setup_dispatcher
@@ -16,9 +16,9 @@ def run_polling(telegram_api_key):
     updater.idle()
 
 
-# class Command(BaseCommand):
-#     help = 'Command for launching a Telegram bot.'
+class Command(BaseCommand):
+    help = 'Command for launching a Telegram bot.'
 
-#     def handle(self, *args, **kwargs):
-#         load_dotenv()
-#         run_polling(os.environ['TG_BOT_HTTP_KEY'])
+    def handle(self, *args, **kwargs):
+        load_dotenv()
+        run_polling(os.environ['TG_BOT_HTTP_KEY'])

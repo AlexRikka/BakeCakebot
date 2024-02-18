@@ -1,8 +1,14 @@
 from telegram.ext import (
     CommandHandler,
     CallbackQueryHandler,
+    ConversationHandler,
+    MessageHandler,
+    Filters
+
 )
-import handlers
+from . import handlers
+
+NAME, PHONE_NUMBER, LOCATION, DELIVERY_TIME, COMMENT = range(5)
 
 
 def setup_dispatcher(dp):
@@ -14,8 +20,8 @@ def setup_dispatcher(dp):
         "pdconsent_agreed", handlers.pdconsent_agreed))
 
     # main menu
-    dp.add_handler(CommandHandler("show_prices", handlers.show_prices))
-    dp.add_handler(CommandHandler("show_prices", handlers.make_an_order))
+    dp.add_handler(CommandHandler(
+        "show_prices", handlers.show_prices))
     dp.add_handler(CommandHandler(
         "show_client_orders", handlers.show_client_orders))
     dp.add_handler(CommandHandler(
@@ -24,5 +30,33 @@ def setup_dispatcher(dp):
 
     # any callback
     dp.add_handler(CallbackQueryHandler(handlers.callback_handler))
+
+    dp.add_handler(CommandHandler(
+        "show_levels", handlers.show_levels))
+
+    # registration
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler(
+            "ask_client_name", handlers.ask_client_name)],
+
+        states={
+            NAME: [MessageHandler(Filters.text, handlers.ask_phone_number)],
+            PHONE_NUMBER: [
+                MessageHandler(Filters.text, handlers.ask_location)
+            ],
+            LOCATION: [
+                MessageHandler(Filters.text, handlers.ask_delivery_time)
+            ],
+            DELIVERY_TIME: [
+                MessageHandler(Filters.text, handlers.leave_comment)
+            ],
+            COMMENT: [
+                MessageHandler(Filters.text, handlers.registration_success)
+            ]
+        },
+        fallbacks=[CommandHandler(
+            "ask_client_name", handlers.ask_client_name)]
+    )
+    dp.add_handler(conv_handler)
 
     return dp
