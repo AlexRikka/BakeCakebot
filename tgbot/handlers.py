@@ -1,11 +1,9 @@
-
+from . import messages
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ConversationHandler
 from polls.models import Client, Cake, Level, Price, Shape, Topping, Berries
 
 NAME, PHONE_NUMBER, LOCATION, DELIVERY_TIME, COMMENT = range(5)
-import messages as messages
-import keyboard as keyboard
 
 
 def callback_handler(update, context):
@@ -26,9 +24,17 @@ def callback_handler(update, context):
         'show_toppings': show_toppings,
     }
     COMMANDS[update.callback_query.data](update, context)
-    
-    
-keyboard.create_keyboard(queryset) #не понимаю что это такое?
+
+
+def create_keyboard(queryset):
+    """Создает вертикальную клавиатуру с именами объектов из Queryset."""
+    keyboard = [
+        [InlineKeyboardButton(
+            item.name,
+            callback_data=item.name
+        )] for item in queryset
+    ]
+    return InlineKeyboardMarkup(keyboard)
 
 
 def start_callback(update, context):
@@ -92,7 +98,7 @@ def start_again(update, context):
 
 def pdconsent_refuse(update, context):
     """Попрощаться после отказа предоставления персональных данных."""
-    messages.pdconsent_refuse(update, context)
+    pdconsent_refuse(update, context)
     start_again(update, context)
 
 
@@ -126,19 +132,19 @@ def pdconsent_agreed(update, context):
 
 
 def show_prices(update, context):
-    messages.show_prices(update, context)
+    show_prices(update, context)
 
 
 def make_an_order(update, context):
-    messages.make_an_order(update, context)
+    make_an_order(update, context)
 
 
 def show_client_orders(update, context):
-    messages.show_client_orders(update, context)
+    show_client_orders(update, context)
 
 
 def show_delivery_time(update, context):
-    messages.show_delivery_time(update, context)
+    show_delivery_time(update, context)
 
 
 def leave_complaint(update, context):
