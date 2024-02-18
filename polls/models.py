@@ -16,10 +16,6 @@ class Client(models.Model):
     phone_number = models.CharField(
         max_length=12,
     )
-    duration = models.DurationField(
-        null=True,
-        blank=True,
-    )
 
     class Meta:
         verbose_name = 'Клиент'
