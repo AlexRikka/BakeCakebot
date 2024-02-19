@@ -1,3 +1,4 @@
+from . import messages
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ConversationHandler
 from polls.models import Client, Cake, Level, Price, Shape, Topping, Berries
@@ -11,6 +12,7 @@ def callback_handler(update, context):
         'pdconsent_refuse': pdconsent_refuse,
         'pdconsent_agreed': pdconsent_agreed,
         'show_prices': show_prices,
+        'make_an_order': make_an_order,
         'show_client_orders': show_client_orders,
         'show_delivery_time': show_delivery_time,
         'leave_complaint': leave_complaint,
@@ -96,11 +98,7 @@ def start_again(update, context):
 
 def pdconsent_refuse(update, context):
     """Попрощаться после отказа предоставления персональных данных."""
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="К сожалению, без согласия нельзя продолжить заказ через бота."
-    )
-
+    pdconsent_refuse(update, context)
     start_again(update, context)
 
 
@@ -112,6 +110,10 @@ def pdconsent_agreed(update, context):
             InlineKeyboardButton(
                 "Посмотреть цены",
                 callback_data='show_prices'
+            )],
+            [InlineKeyboardButton(
+                "Сделать заказ",
+                callback_data='make_an_order'
             )],
             [InlineKeyboardButton(
                 "Показать мои предыдущие заказы",
@@ -130,15 +132,19 @@ def pdconsent_agreed(update, context):
 
 
 def show_prices(update, context):
-    pass
+    show_prices(update, context)
+
+
+def make_an_order(update, context):
+    make_an_order(update, context)
 
 
 def show_client_orders(update, context):
-    pass
+    show_client_orders(update, context)
 
 
 def show_delivery_time(update, context):
-    pass
+    show_delivery_time(update, context)
 
 
 def leave_complaint(update, context):
@@ -270,3 +276,5 @@ def registration_success(update, context):
         text="Заказ успешно оформлен!",
     )
     return ConversationHandler.END
+    messages.leave_complaint(update, context)
+
